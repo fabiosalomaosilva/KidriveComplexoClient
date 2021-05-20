@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidriveComplexoClient", "KidriveComplexoClient\KidriveComplexoClient.csproj", "{CBBC08CC-0D6E-4617-8906-DD91CDE7D327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KidriveComplexoClient", "KidriveComplexoClient\KidriveComplexoClient.csproj", "{CBBC08CC-0D6E-4617-8906-DD91CDE7D327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
