@@ -1,20 +1,20 @@
 ﻿@page "/"
-@using System.ComponentModel.DataAnnotations
+@using KidriveComplexoClient.Shared
+
+<MudThemeProvider />
 
 <h1>Kidrive Complexo Regulador!</h1>
 
 Bem vindo ao Kidrive. Esse é top. Bota top nisso!!!
+<MudInputMask mascara="000.000.000" valor="TextValue"></MudInputMask>
+
 <p>Arrocha. Deu certo...</p>
 <br />
-<MudItem xs="12" sm="6" md="4">
-    <MudTextField @bind-Value="TextValue" Label="Outlined" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-</MudItem>
+<MudInputMask mascara="000.000.000-00" valor="TextValue"></MudInputMask>
 <br />
-<div class="form-group">
-    <label>French Phone no:</label>
-    <InputMask id="test" @bind-Value="TextValue" class="form-control" data-mask="00.00.00.00.00" placeholder="Phone No" />
-</div>
+
+
 
 @code{
-    string TextValue = "";
+    string TextValue = "000";
 }

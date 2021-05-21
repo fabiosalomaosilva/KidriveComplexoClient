@@ -17,15 +17,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="Shared\AppBar.razor" />
     <Content Remove="Shared\MudInputMask.razor" />
+    <Content Remove="wwwroot\js\mask.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Shared\AppBar.razor" />
     <Watch Remove="Shared\MudInputMask.razor" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\mask.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+    <None Include="Shared\AppBar.razor" />
     <None Include="Shared\MudInputMask.razor" />
+    <None Include="wwwroot\js\mask.min.js" />
   </ItemGroup>
 
 
