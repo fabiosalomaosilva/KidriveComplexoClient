@@ -1,5 +1,5 @@
 {
-  "name": "KidriveComplexoClient",
+  "name": "Kidrive",
   "short_name": "KidriveComplexoClient",
   "start_url": "./",
   "display": "standalone",
@@ -7,7 +7,7 @@
   "theme_color": "#03173d",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "/img/brasao.ico",
       "type": "image/png",
       "sizes": "512x512"
     }

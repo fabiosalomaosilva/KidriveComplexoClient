@@ -18,13 +18,17 @@
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="Pages\Account\Login.razor" />
     <Content Remove="Shared\AppBar.razor" />
+    <Content Remove="Shared\BlankLayout.razor" />
     <Content Remove="Shared\MudInputMask.razor" />
     <Content Remove="wwwroot\js\mask.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Pages\Account\Login.razor" />
     <Watch Remove="Shared\AppBar.razor" />
+    <Watch Remove="Shared\BlankLayout.razor" />
     <Watch Remove="Shared\MudInputMask.razor" />
   </ItemGroup>
 
@@ -34,7 +38,9 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="Pages\Login.razor" />
     <None Include="Shared\AppBar.razor" />
+    <None Include="Shared\BlankLayout.razor" />
     <None Include="Shared\MudInputMask.razor" />
     <None Include="wwwroot\js\mask.min.js" />
   </ItemGroup>
@@ -42,6 +48,11 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Pages\Account\" />
   </ItemGroup>
 
 </Project>
