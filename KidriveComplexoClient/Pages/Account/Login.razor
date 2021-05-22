@@ -1,0 +1,88 @@
+﻿@page "/login"
+@layout AnonimousLayout
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<div class="center">
+    <div>
+        <MudCard class="card">
+            <MudCardContent>
+                <MudText Align="Align.Center"><img src="/img/brasao-150.png" /></MudText>
+                <br />
+                <MudText Typo="Typo.h5" Align="Align.Center">Complexo Regulador Estadual</MudText>
+                <MudText Typo="Typo.body2" Align="Align.Center">Entrar com os dados de usuário</MudText>
+                <br />
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="loginModel.email" Label="E-mail" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="loginModel.password" Label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></MudTextField>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+            <MudCardActions class="card-actions" Style="flex-direction:column;align-items:start;">
+                <MudButton Variant="Variant.Filled" Color="Color.Info" FullWidth="true" Size="Size.Large" @onclick="HandleLogin">Entrar</MudButton>
+                <MudLink Href="/counter" Typo="Typo.subtitle2" Style="margin-top:8px;margin-left:5px;">Esqueci a senha</MudLink>
+            </MudCardActions>
+            <MudCardContent>
+            </MudCardContent>
+            @if (ShowErrors)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <p>@Error</p>
+                </div>
+            }
+        </MudCard>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool ShowErrors;
+    private string Error = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthService.Logout();
+    }
+
+    private async Task HandleLogin()
+    {
+        ShowErrors = false;
+
+        var result = await AuthService.Login(loginModel);
+
+        if (result.successful)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Error = result.error;
+            ShowErrors = true;
+        }
+    }
+}
+
+<style>
+    .center {
+        display: flex;
+        flex: 1;
+        height: calc(100vh - 64px);
+        align-items: center;
+        justify-content: center;
+    }
+
+        .center div {
+        }
+
+    .card {
+        width: 450px;
+        padding: 15px;
+    }
+
+    .card-actions {
+        padding: 15px;
+    }
+</style>

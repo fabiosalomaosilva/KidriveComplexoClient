@@ -1,0 +1,18 @@
+﻿<MudThemeProvider Theme="Default" />
+@code{
+    MudTheme Default = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Blue.Default,
+            Secondary = Colors.DeepPurple.Accent4,
+            AppbarBackground = Colors.Teal.Default,
+        },
+
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerWidthLeft = "260px",
+            DrawerWidthRight = "300px"
+        }
+    };
+}
