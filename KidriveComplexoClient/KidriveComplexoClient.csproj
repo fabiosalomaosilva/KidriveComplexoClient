@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="Cadastros\CadPage.razor" />
+    <Content Remove="Cadastros\Usuarios\AddUsuario.razor" />
     <Content Remove="Pages\Account\Add.razor" />
     <Content Remove="Shared\AppBar.razor" />
     <Content Remove="Shared\AppTheme.razor" />
@@ -27,6 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Cadastros\CadPage.razor" />
+    <Watch Remove="Cadastros\Usuarios\AddUsuario.razor" />
     <Watch Remove="Pages\Account\Add.razor" />
     <Watch Remove="Pages\Account\Login.razor" />
     <Watch Remove="Shared\AppBar.razor" />
@@ -41,6 +45,8 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="Cadastros\CadPage.razor" />
+    <None Include="Cadastros\Usuarios\AddUsuario.razor" />
     <None Include="Pages\Account\Login.razor" />
     <None Include="Pages\Add.razor" />
     <None Include="Shared\AppBar.razor" />

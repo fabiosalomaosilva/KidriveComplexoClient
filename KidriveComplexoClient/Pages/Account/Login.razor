@@ -3,9 +3,9 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<div class="center">
-    <div>
-        <MudCard class="card">
+<MudItem  Width="100%" >
+    <MudContainer MaxWidth="MaxWidth.Small">
+        <MudPaper Width="100%" Square="false">
             <MudCardContent>
                 <MudText Align="Align.Center"><img src="/img/brasao-150.png" /></MudText>
                 <br />
@@ -33,9 +33,9 @@
                     <p>@Error</p>
                 </div>
             }
-        </MudCard>
-    </div>
-</div>
+        </MudPaper>
+    </MudContainer>
+</MudItem>
 
 @code {
     private LoginModel loginModel = new LoginModel();
@@ -65,24 +65,3 @@
     }
 }
 
-<style>
-    .center {
-        display: flex;
-        flex: 1;
-        height: calc(100vh - 64px);
-        align-items: center;
-        justify-content: center;
-    }
-
-        .center div {
-        }
-
-    .card {
-        width: 450px;
-        padding: 15px;
-    }
-
-    .card-actions {
-        padding: 15px;
-    }
-</style>

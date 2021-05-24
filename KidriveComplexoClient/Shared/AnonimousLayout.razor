@@ -1,40 +1,28 @@
 ﻿@inherits LayoutComponentBase
-<MudThemeProvider />
+<MudThemeProvider Theme="Default" />
 <MudSnackbarProvider />
 
-<div class="corpo">
-    <div>
-        @Body
-    </div>
-    <footer>
-        <h4>Arquivar.Net - @data</h4>
-    </footer>
-</div>
+    <MudContainer MaxWidth="MaxWidth.Small" Style="height: 100vh" Class="d-flex align-center">
+        <MudItem Class="d-flex flex-column">
+            @Body
+            <MudText Typo="Typo.subtitle1" Align="Align.Center">Arquivar.Net - @data</MudText>
+        </MudItem>
+    </MudContainer>
 
 @code{
     string data = DateTime.Now.Year.ToString();
+    MudTheme Default = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Blue.Default,
+            Secondary = Colors.DeepPurple.Lighten1,
+            Tertiary = Colors.Teal.Lighten1,
+            AppbarBackground = Colors.Blue.Darken1,
+            Background = "#ECF0F5",
+            DrawerText = Colors.Grey.Darken4,
+        },
+
+    };
 }
 
-<style>
-    .corpo {
-        background-color: #ECF0F5;
-    }
-
-    footer {
-        position: fixed;
-        width: 100%;
-        height: 64px;
-        bottom: 0;
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        background-color: #ECF0F5;
-    }
-
-    footer div {
-        text-align: center;
-        font-weight: 400;
-    }
-</style>
