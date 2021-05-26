@@ -3,21 +3,21 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<MudItem  Width="100%" >
+<MudItem Width="100%">
     <MudContainer MaxWidth="MaxWidth.Small">
-        <MudPaper Width="100%" Square="false">
+        <MudPaper Width="100%" Square="false" Style="padding-inline:15px;">
             <MudCardContent>
-                <MudText Align="Align.Center"><img src="/img/brasao-150.png" /></MudText>
+                <MudText Align="Align.Center"><img src="/img/brasao-150.png" width="120" /></MudText>
                 <br />
                 <MudText Typo="Typo.h5" Align="Align.Center">Complexo Regulador Estadual</MudText>
                 <MudText Typo="Typo.body2" Align="Align.Center">Entrar com os dados de usuário</MudText>
                 <br />
                 <MudGrid>
                     <MudItem xs="12">
-                        <MudTextField @bind-Value="loginModel.email" Label="E-mail" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
+                        <SfTextBox @bind-Value="loginModel.email" Label="E-mail" Variant="Variant.Outlined" InputType="InputType.Text"></SfTextBox>
                     </MudItem>
                     <MudItem xs="12">
-                        <MudTextField @bind-Value="loginModel.password" Label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></MudTextField>
+                        <SfTextBox @bind-Value="loginModel.password" Label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></SfTextBox>
                     </MudItem>
                 </MudGrid>
             </MudCardContent>

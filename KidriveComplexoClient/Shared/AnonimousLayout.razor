@@ -2,12 +2,12 @@
 <MudThemeProvider Theme="Default" />
 <MudSnackbarProvider />
 
-    <MudContainer MaxWidth="MaxWidth.Small" Style="height: 100vh" Class="d-flex align-center">
-        <MudItem Class="d-flex flex-column">
-            @Body
-            <MudText Typo="Typo.subtitle1" Align="Align.Center">Arquivar.Net - @data</MudText>
-        </MudItem>
-    </MudContainer>
+<div class="container">
+    <main>@Body</main>
+    <footer>
+        <MudText Typo="Typo.subtitle2" Align="Align.Center">Arquivar.Net - @data</MudText>
+    </footer>
+</div>
 
 @code{
     string data = DateTime.Now.Year.ToString();
@@ -26,3 +26,29 @@
     };
 }
 
+<style>
+    html {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: grid;
+        grid-template-rows: calc(100vh - 60px) 60px;
+    }
+
+    main {
+        grid-row: 1 / 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    footer {
+        grid-row: 2 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
