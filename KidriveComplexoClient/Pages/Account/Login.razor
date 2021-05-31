@@ -2,6 +2,7 @@
 @layout AnonimousLayout
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 <MudItem Width="100%">
     <MudContainer MaxWidth="MaxWidth.Small">
@@ -14,10 +15,10 @@
                 <br />
                 <MudGrid>
                     <MudItem xs="12">
-                        <SfTextBox @bind-Value="loginModel.email" Label="E-mail" Variant="Variant.Outlined" InputType="InputType.Text"></SfTextBox>
+                        <MudTextField @bind-Value="loginModel.email" label="Senha" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
                     </MudItem>
                     <MudItem xs="12">
-                        <SfTextBox @bind-Value="loginModel.password" Label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></SfTextBox>
+                        <MudTextField @bind-Value="loginModel.password" label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudCardContent>
@@ -49,6 +50,11 @@
 
     private async Task HandleLogin()
     {
+        if(string.IsNullOrEmpty(loginModel.email) || string.IsNullOrEmpty(loginModel.password))
+        {
+            Alert("Dados incompletos", Variant.Filled);
+            return;
+        }
         ShowErrors = false;
 
         var result = await AuthService.Login(loginModel);
@@ -59,9 +65,15 @@
         }
         else
         {
-            Error = result.error;
-            ShowErrors = true;
+            Alert(Error, Variant.Filled);
         }
+    }
+    void Alert(string message, Variant variant)
+    {
+        Snackbar.Configuration.BackgroundBlurred = true;
+        Snackbar.Configuration.SnackbarVariant = variant;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Add(message, Severity.Error);
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
 
-<MudTextField T="string" Variant=@variant id=@guid Label=@label Margin=@margin @bind-Value=@valor />
+<MudTextField T="string" Variant=@variant id=@guid Label=@label @bind-Value=@valor Placeholder="@label" />
 
 @code {
     Guid guid { get; set; }
@@ -9,7 +9,7 @@
 
     [Parameter] public string mascara { get; set; } //Mask
 
-    [Parameter] public Margin margin { get; set; } = Margin.Dense;
+    [Parameter] public Margin margin { get; set; } = Margin.Normal;
 
 
     [Parameter] public EventCallback<string> valorChanged { get; set; }
@@ -34,14 +34,8 @@
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("IMask", guid.ToString(), mascara);
+            await JSRuntime.InvokeVoidAsync("mask", guid.ToString(), mascara); //calls the masking function for this MudTextField's ID
         }
     }
 
 }
-
-
-
-
-
-

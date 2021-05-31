@@ -13,4 +13,6 @@ namespace KidriveComplexoClient.Models
         public string cpf { get; set; }
         public string cargo { get; set; }
     }
+
+
 }
