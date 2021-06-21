@@ -1,0 +1,55 @@
+﻿@page "/setores/add"
+@inject HttpClient httpClient
+@inject IChangeService ChangeService
+@inject NavigationManager navigation
+@inject IDialogService DialogService
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudPaper Class="d-flex flex-column align-left justify-center mud-width-full py-8 px-8">
+            <h1>Cadastro de setor</h1>
+            <p>Inserir os dados do novo setor</p>
+            <br />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="obj.nome" label="Nome do setor" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
+                </MudItem>
+
+
+                <MudItem xs="12" Class="d-flex justify-end">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px">Cancelar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px">Salvar</MudButton>
+                </MudItem>
+            </MudGrid>
+
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private Setor obj = new Setor();
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+
+    void ValueChange()
+    {
+        StateHasChanged();
+    }
+    async void Salvar()
+    {
+        var result = await httpClient.PostAsJsonAsync<Setor>("/api/setores", obj);
+        if (result.IsSuccessStatusCode)
+        {
+            ChangeService.Change();
+            obj = new Setor();
+            if (MudDialog != null)
+            {
+                MudDialog.Close();
+                return;
+            }
+            navigation.NavigateTo("/setores/list");
+
+        }
+
+    }
+}

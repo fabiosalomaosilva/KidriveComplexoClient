@@ -1,4 +1,5 @@
 ﻿@page "/usuarios/add"
+@inject HttpClient httpClient
 
 <MudGrid>
     <MudItem xs="12">
@@ -11,26 +12,26 @@
                     <MudTextField @bind-Value="user.nomeCompleto" label="Nome completo" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
                 </MudItem>
 
-                    <MudItem xs="12" md="6">
-                        <MudInputMask mascara="000.000.000-00" valor="user.cpf" label="CPF"></MudInputMask>
-                    </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudInputMask mascara="000.000.000-00" valor="user.cpf" label="CPF"></MudInputMask>
+                </MudItem>
 
-                    <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="user.email" label="E-mail" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
-                    </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="user.email" label="E-mail" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
+                </MudItem>
 
-                    <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="user.setor" Label="Setor" Variant="Variant.Outlined"></MudTextField>
-                    </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="user.setor" Label="Setor" Variant="Variant.Outlined"></MudTextField>
+                </MudItem>
 
-                    <MudItem xs="12" md="6">
-                        <MudTextField @bind-Value="user.cargo" Label="Cargo" Variant="Variant.Outlined"></MudTextField>
-                    </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="user.cargo" Label="Cargo" Variant="Variant.Outlined"></MudTextField>
+                </MudItem>
 
-                    <MudItem xs="12" Class="d-flex justify-end">
-                        <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px">Cancelar</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px">Salvar</MudButton>
-                    </MudItem>
+                <MudItem xs="12" Class="d-flex justify-end">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px">Cancelar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px">Salvar</MudButton>
+                </MudItem>
             </MudGrid>
 
         </MudPaper>

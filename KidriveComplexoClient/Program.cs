@@ -27,6 +27,8 @@ namespace KidriveComplexoClient
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthStateProvider>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IChangeService, ChangeService>();
+
             await builder.Build().RunAsync();
         }
     }

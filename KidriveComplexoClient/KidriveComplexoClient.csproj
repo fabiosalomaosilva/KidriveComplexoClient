@@ -18,19 +18,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Setores\ListaSetores.razor" />
+    <Content Remove="Shared\Modal.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Remove="Pages\Setores\ListaSetores.razor" />
+    <Watch Remove="Shared\Modal.razor" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\Modal.razor" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Setores\ListaSetores.razor" />
   </ItemGroup>
 
 </Project>

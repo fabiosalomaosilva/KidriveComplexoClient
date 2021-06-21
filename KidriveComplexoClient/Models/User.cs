@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace KidriveComplexoClient.Models
 {
     public class User
     {
-        public string uid { get; set; }
+        public string id { get; set; }
         public string setor { get; set; }
         public string nomeCompleto { get; set; }
         public string email { get; set; }
@@ -13,6 +12,5 @@ namespace KidriveComplexoClient.Models
         public string cpf { get; set; }
         public string cargo { get; set; }
     }
-
 
 }
