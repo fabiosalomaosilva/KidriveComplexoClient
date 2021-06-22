@@ -6,5 +6,6 @@ namespace KidriveComplexoClient.Services
     {
         event Action OnChange;
         void Change();
+        void ChangeAsync();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace KidriveComplexoClient.Models
+﻿namespace KidriveComplexoClient.Models
 {
     public class User
     {
@@ -12,5 +10,6 @@ namespace KidriveComplexoClient.Models
         public string cpf { get; set; }
         public string cargo { get; set; }
     }
-
 }
+
+

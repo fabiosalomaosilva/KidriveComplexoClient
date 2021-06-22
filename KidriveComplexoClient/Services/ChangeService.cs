@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace KidriveComplexoClient.Services
 {
@@ -8,6 +9,11 @@ namespace KidriveComplexoClient.Services
         public void Change()
         {
             OnChange?.Invoke();
+        }
+
+        public async void ChangeAsync()
+        {
+            await Task.Run(() => OnChange?.Invoke());
         }
     }
 }

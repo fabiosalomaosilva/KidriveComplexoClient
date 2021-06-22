@@ -5,7 +5,7 @@
 @inject NavigationManager navigation
 @inject IDialogService DialogService
 
-<MudTable Items="@Elements" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
+<MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Setores</MudText>
         <MudToolBarSpacer />
@@ -20,7 +20,7 @@
         <MudTd DataLabel="Setor">@context.nome</MudTd>
         <MudTd DataLabel="Ações" Style="width:100px;">
             <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="Edit"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="Delete"></MudIconButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
@@ -37,16 +37,18 @@
     private Setor selectedItem = null;
     private HashSet<Setor> selectedItems = new HashSet<Setor>();
 
-    private IEnumerable<Setor> Elements = new List<Setor>();
+    private IEnumerable<Setor> setores = new List<Setor>();
+    [CascadingParameter] IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Elements = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
+        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
         ChangeService.OnChange += OnChange;
     }
 
-    private void OnChange()
+    private async void OnChange()
     {
+        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
         StateHasChanged();
     }
 
@@ -63,7 +65,15 @@
 
     void Edit()
     {
-        //navigation.NavigateTo("/setores/list");
-        var dialog = DialogService.Show<AddSetor>("Adicionar setor");
+        navigation.NavigateTo("/setores/add");
+        //Modal.Show<AddSetor>();
+    }
+    void Delete()
+    {
+        var options = new ModalOptions()
+        {
+            HideHeader = true
+        };
+        Modal.Show<AddSetor>("", options);
     }
 }

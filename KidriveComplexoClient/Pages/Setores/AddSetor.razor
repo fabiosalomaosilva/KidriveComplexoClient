@@ -2,11 +2,10 @@
 @inject HttpClient httpClient
 @inject IChangeService ChangeService
 @inject NavigationManager navigation
-@inject IDialogService DialogService
 
 <MudGrid>
     <MudItem xs="12">
-        <MudPaper Class="d-flex flex-column align-left justify-center mud-width-full py-8 px-8">
+        <MudPaper Class="@Estilo" Elevation="@Elevation">
             <h1>Cadastro de setor</h1>
             <p>Inserir os dados do novo setor</p>
             <br />
@@ -17,8 +16,8 @@
 
 
                 <MudItem xs="12" Class="d-flex justify-end">
-                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px">Cancelar</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px">Salvar</MudButton>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="Cancelar">Cancelar</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px" @onclick="Salvar">Salvar</MudButton>
                 </MudItem>
             </MudGrid>
 
@@ -28,8 +27,24 @@
 
 @code {
     private Setor obj = new Setor();
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private string Estilo;
+    private int Elevation;
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
+    protected override void OnInitialized()
+    {
+        if (ModalInstance != null)
+        {
+            Estilo = "d-flex flex-column align-left justify-center mud-width-full";
+            Elevation = 0;
+        }
+        else
+        {
+            Estilo = "d-flex flex-column align-left justify-center mud-width-full py-8 px-8";
+            Elevation = 1;
+            StateHasChanged();
+        }
+    }
 
     void ValueChange()
     {
@@ -42,14 +57,15 @@
         {
             ChangeService.Change();
             obj = new Setor();
-            if (MudDialog != null)
-            {
-                MudDialog.Close();
-                return;
-            }
-            navigation.NavigateTo("/setores/list");
+            if (ModalInstance != null)
+                await ModalInstance.CloseAsync();
 
+            navigation.NavigateTo("/setores/list");
         }
+    }
+    void Cancelar()
+    {
+        navigation.NavigateTo("/setores/list");
 
     }
 }
