@@ -1,7 +1,7 @@
 using Blazored.LocalStorage;
 using Blazored.Modal;
-using KidriveComplexoClient.Models;
 using KidriveComplexoClient.Services;
+using KidriveComplexoClient.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +30,7 @@ namespace KidriveComplexoClient
             builder.Services.AddBlazoredModal();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthStateProvider>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IOptionsModal, OptionsModal>();
             builder.Services.AddSingleton<IChangeService, ChangeService>();
 
             await builder.Build().RunAsync();

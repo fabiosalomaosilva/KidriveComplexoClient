@@ -4,6 +4,7 @@
 @inject IChangeService ChangeService
 @inject NavigationManager navigation
 @inject IDialogService DialogService
+@inject IOptionsModal OptionsModal
 
 <MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
     <ToolBarContent>
@@ -70,10 +71,7 @@
     }
     void Delete()
     {
-        var options = new ModalOptions()
-        {
-            HideHeader = true
-        };
-        Modal.Show<AddSetor>("", options);
+
+        Modal.Show<AddSetor>("", OptionsModal.HideHeader());
     }
 }
