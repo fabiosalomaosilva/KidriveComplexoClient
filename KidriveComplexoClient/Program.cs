@@ -19,9 +19,10 @@ namespace KidriveComplexoClient
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
+       
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDUwNzIzQDMxMzkyZTMxMmUzMFRJTnVhTkZFdGdodTJxL0loVFliTzRIOUN5TXRIM1dkTEs0QVYrN283Q009");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://southamerica-east1-kidrivecomplexo.cloudfunctions.net/api/") });
+            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5001/kidrivecomplexo/southamerica-east1/api/") });
             builder.Services.AddMudServices();
             builder.Services.AddSyncfusionBlazor();
 

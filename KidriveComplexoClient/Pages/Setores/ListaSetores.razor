@@ -6,36 +6,45 @@
 @inject IDialogService DialogService
 @inject IOptionsModal OptionsModal
 
-<MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Setores</MudText>
-        <MudToolBarSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Pesquisa" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Immediate="true" Clearable="true" Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh>Nome</MudTh>
-        <MudTh>Ações</MudTh>
-    </HeaderContent>
-    <RowTemplate>
+@if (Carregando == true)
+{
+    <Loading />
+}
+else
+{
+    <MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Setores</MudText>
+            <MudToolBarSpacer />
+            <MudTextField @bind-Value="searchString" Placeholder="Pesquisa" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Immediate="true" Clearable="true" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Nome</MudTh>
+            <MudTh>Ações</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Setor">@context.nome</MudTd>
+            <MudTd DataLabel="Ações" Style="width:100px;">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="@(() => Edit(context.id))"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="Delete"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="Linhas por página" InfoFormat="{first_item} - {last_item} de {all_items}" />
+        </PagerContent>
+    </MudTable>
+}
+<h3>@selectedItem.nome</h3>
 
-        <MudTd DataLabel="Setor">@context.nome</MudTd>
-        <MudTd DataLabel="Ações" Style="width:100px;">
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" OnClick="Edit"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" OnClick="Delete"></MudIconButton>
-        </MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="Linhas por página" InfoFormat="{first_item} - {last_item} de {all_items}" />
-    </PagerContent>
-</MudTable>
 
 @code {
     private bool dense = false;
     private bool hover = true;
     private bool striped = false;
     private bool bordered = false;
+    private bool Carregando = true;
     private string searchString = "";
-    private Setor selectedItem = null;
+    private Setor selectedItem = new Setor();
     private HashSet<Setor> selectedItems = new HashSet<Setor>();
 
     private IEnumerable<Setor> setores = new List<Setor>();
@@ -44,12 +53,13 @@
     protected override async Task OnInitializedAsync()
     {
         setores = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
+        Carregando = false;
         ChangeService.OnChange += OnChange;
     }
 
     private async void OnChange()
     {
-        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
+        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/setores");
         StateHasChanged();
     }
 
@@ -64,14 +74,12 @@
         return false;
     }
 
-    void Edit()
+    void Edit(string id)
     {
-        navigation.NavigateTo("/setores/add");
-        //Modal.Show<AddSetor>();
+        navigation.NavigateTo($"/setores/add/{id}");
     }
     void Delete()
     {
-
         Modal.Show<AddSetor>("", OptionsModal.HideHeader());
     }
 }

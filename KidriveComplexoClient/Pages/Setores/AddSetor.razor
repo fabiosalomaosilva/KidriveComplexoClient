@@ -1,38 +1,58 @@
 ﻿@page "/setores/add"
+@page "/setores/add/{id}"
 @inject HttpClient httpClient
 @inject IChangeService ChangeService
 @inject NavigationManager navigation
+@inject ISnackbar Snackbar
 
-<MudGrid>
-    <MudItem xs="12">
-        <MudPaper Class="@Estilo" Elevation="@Elevation">
-            <h1>Cadastro de setor</h1>
-            <p>Inserir os dados do novo setor</p>
-            <br />
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudTextField @bind-Value="obj.nome" label="Nome do setor" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
-                </MudItem>
+@if (!string.IsNullOrEmpty(id) && string.IsNullOrEmpty(obj.id))
+{
+    <Loading />
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12">
+            <MudPaper Class="@Estilo" Elevation="@Elevation">
+                <h1>Cadastro de setor</h1>
+                <p>Inserir os dados do novo setor</p>
+                <br />
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="obj.nome" label="Nome do setor" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
+                    </MudItem>
 
 
-                <MudItem xs="12" Class="d-flex justify-end">
-                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="Cancelar">Cancelar</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px" @onclick="Salvar">Salvar</MudButton>
-                </MudItem>
-            </MudGrid>
+                    <MudItem xs="12" Class="d-flex justify-end">
+                        <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="Cancelar">Cancelar</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px" @onclick="Salvar">Salvar</MudButton>
+                    </MudItem>
+                </MudGrid>
 
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
 
 @code {
+    [Parameter]
+    public string id { get; set; }
     private Setor obj = new Setor();
     private string Estilo;
     private int Elevation;
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Add("Erro ao salvar", Severity.Error);
+
+        if (!string.IsNullOrEmpty(id))
+        {
+            obj = await httpClient.GetFromJsonAsync<Setor>($"/api/setores/{id}");
+
+        }
         if (ModalInstance != null)
         {
             Estilo = "d-flex flex-column align-left justify-center mud-width-full";
@@ -52,16 +72,42 @@
     }
     async void Salvar()
     {
-        var result = await httpClient.PostAsJsonAsync<Setor>("/api/setores", obj);
-        if (result.IsSuccessStatusCode)
+        try
         {
-            ChangeService.Change();
-            obj = new Setor();
-            if (ModalInstance != null)
-                await ModalInstance.CloseAsync();
+            HttpResponseMessage result;
+            if (string.IsNullOrEmpty(obj.id))
+            {
+                result = await httpClient.PostAsJsonAsync<Setor>("/api/setores", obj);
 
-            navigation.NavigateTo("/setores/list");
+            }
+            else
+            {
+                result = await httpClient.PutAsJsonAsync<Setor>("/api/setores", obj);
+
+            }
+            if (result.IsSuccessStatusCode)
+            {
+                ChangeService.Change();
+                obj = new Setor();
+                if (ModalInstance != null)
+                    await ModalInstance.CloseAsync();
+                navigation.NavigateTo("/setores/list");
+            }
+            else
+            {
+                Snackbar.Clear();
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+                Snackbar.Add("Erro ao salvar", Severity.Error);
+            }
         }
+        catch (Exception)
+        {
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+            Snackbar.Add("Erro ao salvar", Severity.Error);
+        }
+
+
     }
     void Cancelar()
     {
