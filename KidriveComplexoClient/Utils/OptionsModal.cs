@@ -11,7 +11,8 @@ namespace KidriveComplexoClient.Utils
                 HideHeader = true,
                 Animation = ModalAnimation.FadeInOut(1),
                 ContentScrollable = false,
-                Position = ModalPosition.Center
+                Position = ModalPosition.Center,
+                DisableBackgroundCancel = true
             };
 
         }

@@ -5,7 +5,7 @@
 @inject NavigationManager navigation
 @inject ISnackbar Snackbar
 
-@if (!string.IsNullOrEmpty(id) && string.IsNullOrEmpty(obj.id))
+@if ((!string.IsNullOrEmpty(id) && string.IsNullOrEmpty(obj.id)) || carregando == true)
 {
     <Loading />
 }
@@ -24,7 +24,7 @@ else
 
 
                     <MudItem xs="12" Class="d-flex justify-end">
-                        <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="Cancelar">Cancelar</MudButton>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="@(() => Cancelar())">Cancelar</MudButton>
                         <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px" @onclick="Salvar">Salvar</MudButton>
                     </MudItem>
                 </MudGrid>
@@ -40,14 +40,11 @@ else
     private Setor obj = new Setor();
     private string Estilo;
     private int Elevation;
+    private bool carregando = false;
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Snackbar.Clear();
-        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
-        Snackbar.Add("Erro ao salvar", Severity.Error);
-
         if (!string.IsNullOrEmpty(id))
         {
             obj = await httpClient.GetFromJsonAsync<Setor>($"/api/setores/{id}");
@@ -74,6 +71,7 @@ else
     {
         try
         {
+            carregando = true;
             HttpResponseMessage result;
             if (string.IsNullOrEmpty(obj.id))
             {
@@ -87,6 +85,7 @@ else
             }
             if (result.IsSuccessStatusCode)
             {
+                carregando = false;
                 ChangeService.Change();
                 obj = new Setor();
                 if (ModalInstance != null)
@@ -95,6 +94,7 @@ else
             }
             else
             {
+                carregando = false;
                 Snackbar.Clear();
                 Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
                 Snackbar.Add("Erro ao salvar", Severity.Error);
@@ -102,16 +102,18 @@ else
         }
         catch (Exception)
         {
+            carregando = false;
             Snackbar.Clear();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
             Snackbar.Add("Erro ao salvar", Severity.Error);
         }
-
-
     }
     void Cancelar()
     {
-        navigation.NavigateTo("/setores/list");
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
+        Snackbar.Add("Erro ao salvar", Severity.Error);
+        //navigation.NavigateTo("/setores/list");
 
     }
 }

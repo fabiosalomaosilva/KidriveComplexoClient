@@ -5,6 +5,7 @@ using KidriveComplexoClient.Utils;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using MudBlazor;
 using MudBlazor.Services;
 using Syncfusion.Blazor;
 using System;
@@ -19,11 +20,21 @@ namespace KidriveComplexoClient
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-       
+
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDUwNzIzQDMxMzkyZTMxMmUzMFRJTnVhTkZFdGdodTJxL0loVFliTzRIOUN5TXRIM1dkTEs0QVYrN283Q009");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://southamerica-east1-kidrivecomplexo.cloudfunctions.net/api/") });
             //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5001/kidrivecomplexo/southamerica-east1/api/") });
-            builder.Services.AddMudServices();
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
             builder.Services.AddSyncfusionBlazor();
 
             builder.Services.AddAuthorizationCore();
