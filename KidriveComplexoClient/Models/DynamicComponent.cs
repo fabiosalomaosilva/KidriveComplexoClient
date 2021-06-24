@@ -22,9 +22,7 @@ namespace Microsoft.AspNetCore.Components
         public Type Type { get; set; } = default!;
 
         [Parameter]
-        public IDictionary<string, object>
-    ? Parameters
-        { get; set; }
+        public IDictionary<string, object>? Parameters { get; set; }
 
         /// <inheritdoc />
         public void Attach(RenderHandle renderHandle)

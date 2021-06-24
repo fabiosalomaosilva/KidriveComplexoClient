@@ -1,5 +1,7 @@
 ﻿@page "/setores/add"
 @page "/setores/add/{id}"
+@attribute [Authorize]
+
 @inject HttpClient httpClient
 @inject IChangeService ChangeService
 @inject NavigationManager navigation
@@ -19,13 +21,13 @@ else
                 <br />
                 <MudGrid>
                     <MudItem xs="12">
-                        <MudTextField @bind-Value="obj.nome" label="Nome do setor" Variant="Variant.Outlined" InputType="InputType.Text"></MudTextField>
+                        <MudTextField @bind-Value="obj.nome" label="Nome do setor" Variant="Variant.Outlined" InputType="InputType.Text" Margin="Margin.Dense"></MudTextField>
                     </MudItem>
 
 
                     <MudItem xs="12" Class="d-flex justify-end">
-                        <MudButton Variant="Variant.Outlined" Color="Color.Warning" Size="Size.Medium" FullWidth="false" Style="width:180px" @onclick="@(() => Cancelar())">Cancelar</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:180px" @onclick="Salvar">Salvar</MudButton>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Default" Size="Size.Medium" FullWidth="false" Style="width:160px" @onclick="@(() => Cancelar())">Cancelar</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" FullWidth="false" Class="pa-2 mx-2" Style="width:160px" @onclick="Salvar">Salvar</MudButton>
                     </MudItem>
                 </MudGrid>
 
@@ -110,10 +112,7 @@ else
     }
     void Cancelar()
     {
-        Snackbar.Clear();
-        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopRight;
-        Snackbar.Add("Erro ao salvar", Severity.Error);
-        //navigation.NavigateTo("/setores/list");
+        navigation.NavigateTo("/setores/list");
 
     }
 }

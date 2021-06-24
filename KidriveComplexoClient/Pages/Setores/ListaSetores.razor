@@ -1,4 +1,6 @@
 ﻿@page "/setores/list"
+@attribute [Authorize]
+
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IChangeService ChangeService
@@ -12,9 +14,14 @@
 }
 else
 {
-    <MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="20" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
+    <h1 style="margin-bottom:10px;margin-left:5px;font-weight:400;">Setores</h1>
+    <MudTable Items="@setores" Dense="true" Hover="true" RowsPerPage="15" Bordered="false" Striped="true" Filter="new Func<Setor,bool>(FilterFunc)" @bind-SelectedItem="selectedItem" FixedHeader="false" Height="625px">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Setores</MudText>
+            <MudFab Icon="@Icons.Material.Filled.Add" DisableElevation="true" Size="Size.Small" IconSize="Size.Medium" Color="Color.Default" OnClick="@Add" Class="mr-3 mt-3"></MudFab>
+            <MudFab Icon="@Icons.Material.Filled.Refresh" DisableElevation="true" Size="Size.Small" IconSize="Size.Medium" Color="Color.Default" OnClick="@Refresh" Class="mr-3 mt-3"></MudFab>
+            <MudFab Icon="@Icons.Material.Filled.Print" DisableElevation="true" Size="Size.Small" IconSize="Size.Medium" Color="Color.Default" Class="mr-3 mt-3"></MudFab>
+            <MudFab Icon="@Icons.Material.Filled.PictureAsPdf" DisableElevation="true" Size="Size.Small" IconSize="Size.Medium" Color="Color.Default" Class="mr-3 mt-3"></MudFab>
+
             <MudToolBarSpacer />
             <MudTextField @bind-Value="searchString" Placeholder="Pesquisa" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Immediate="true" Clearable="true" Class="mt-0"></MudTextField>
         </ToolBarContent>
@@ -38,10 +45,6 @@ else
 
 
 @code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
     private bool Carregando = true;
     private string searchString = "";
     private Setor selectedItem = new Setor();
@@ -50,16 +53,16 @@ else
     private IEnumerable<Setor> setores = new List<Setor>();
     [CascadingParameter] IModalService Modal { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
+        Refresh();
         Carregando = false;
         ChangeService.OnChange += OnChange;
     }
 
-    private async void OnChange()
+    private void OnChange()
     {
-        setores = await httpClient.GetFromJsonAsync<List<Setor>>("/setores");
+        Refresh();
         StateHasChanged();
     }
 
@@ -74,6 +77,16 @@ else
         return false;
     }
 
+    async void Refresh()
+    {
+        var lista = await httpClient.GetFromJsonAsync<List<Setor>>("/api/setores");
+        setores = lista.OrderBy(p => p.nome);
+        StateHasChanged();
+    }
+    void Add()
+    {
+        navigation.NavigateTo($"/setores/add");
+    }
     void Edit(string id)
     {
         navigation.NavigateTo($"/setores/add/{id}");

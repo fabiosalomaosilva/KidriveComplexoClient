@@ -15,14 +15,14 @@
                 <br />
                 <MudGrid>
                     <MudItem xs="12">
-                        <MudTextField @bind-Value="loginModel.email" label="Senha" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
+                        <MudTextField @bind-Value="loginModel.email" label="E-mail" Variant="Variant.Outlined" InputType="InputType.Email"></MudTextField>
                     </MudItem>
                     <MudItem xs="12">
                         <MudTextField @bind-Value="loginModel.password" label="Senha" Variant="Variant.Outlined" InputType="InputType.Password"></MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudCardContent>
-            <MudCardActions class="card-actions" Style="flex-direction:column;align-items:start;">
+            <MudCardActions class="card-actions mx-2" Style="flex-direction:column;align-items:start;">
                 <ButtonProgress Color="Color.Info" Loading="@carregando" Variant="Variant.Filled" FullWidth="true" Size="Size.Medium" Title="Entrar" ColorProgress="#fff" OnClick="HandleLogin" />
                 <MudLink Href="/counter" Typo="Typo.subtitle2" Style="margin-top:8px;margin-left:5px;">Esqueci a senha</MudLink>
             </MudCardActions>
